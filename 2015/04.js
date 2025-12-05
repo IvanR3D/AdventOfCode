@@ -123,28 +123,17 @@ function md5(input) {
 
   return toHexLE(A) + toHexLE(B) + toHexLE(C) + toHexLE(D);
 }
-
-const id = "wtnhxymk";
-const limit = 100000000; // long arbitrary number
-let pass = "";
-let pass2 = [null, null, null, null, null, null, null, null];
-let counter = 0;
-let counter2 = 0;
+const input = "iwrupvqb";
+const limit = 10000000;
+let flag = false;
 for (let i = 0; i < limit; i++) {
-  const hash = md5(id + i);
-  const areZeroes = hash.slice(0, 5) === "00000";
-  if (areZeroes) {
-    if (counter < 8) {
-      pass += hash[5];
-      counter++;
-    }
-    const pos = Number(hash[5]);
-    if (pos >= 0 && pos < 8 && pass2[pos] === null) {
-      pass2[pos] = hash[6];
-      counter2++;
-    }
+  const hash = md5(input + i);
+  if (hash.startsWith("00000") && !flag) {
+    console.log("Part 1 ->", i);
+    flag = true;
   }
-  if (counter === 8 && counter2 === 8) break;
+  if (hash.startsWith("000000")) {
+    console.log("Part 2 ->", i);
+    break;
+  }
 }
-console.log("Part 1 ->", pass);
-console.log("Part 2 ->", pass2.join(""));

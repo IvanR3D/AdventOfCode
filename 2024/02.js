@@ -37,4 +37,3 @@ function safeReport(levels) {
     }
     return false;
 }
-Language:JavaScript
