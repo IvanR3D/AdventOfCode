@@ -34,5 +34,4 @@ for(let k = 0; k < steps; k++) {
     }
     data = grid;
 }
-
 console.log('Part 1 ->',counter);
