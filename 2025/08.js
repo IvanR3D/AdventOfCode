@@ -18,9 +18,10 @@ function union(a, b) {
   }
   return true;
 }
-const data = $("*").textContent.trim().split("\n");
+const data = $0.textContent.trim().split("\n");
 const pairs = [];
 const limit = 1000;
+console.info("Wait a bit for answers...");
 data.forEach((d, i) => {
   const [x, y, z] = d.split(",").map(Number);
   for (let j = i + 1; j < data.length; j++) {
@@ -33,10 +34,10 @@ data.forEach((d, i) => {
   }
 });
 pairs.sort((a, b) => a[0] - b[0]);
-const parent = Array(data.length)
+let parent = Array(data.length)
   .fill(0)
   .map((_, i) => i);
-const size = Array(data.length).fill(1);
+let size = Array(data.length).fill(1);
 for (let k = 0; k < limit; k++) {
   const [, i, j] = pairs[k];
   union(i, j);
@@ -48,3 +49,25 @@ for (let i = 0; i < data.length; i++) {
 }
 const sizes = [...comp.values()].sort((a, b) => b - a);
 console.log("Part 1 ->", sizes[0] * sizes[1] * sizes[2]);
+
+let components = data.length;
+let lastEdge = null;
+parent = Array(data.length)
+  .fill(0)
+  .map((_, i) => i);
+size = Array(data.length).fill(1);
+for (let k = 0; k < pairs.length; k++) {
+  const [, i, j] = pairs[k];
+  if (union(i, j)) {
+    components--;
+    if (components === 1) {
+      lastEdge = [i, j];
+      break;
+    }
+  }
+}
+const [i, j] = lastEdge;
+const xi = Number(data[i].split(",")[0]);
+const xj = Number(data[j].split(",")[0]);
+const result = xi * xj;
+console.log("Part 2 ->", result);
