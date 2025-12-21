@@ -15,3 +15,8 @@ for (const [from, to] of r) {
   }
 }
 console.log("Part 1 ->", s.size);
+
+const tokens = molecule.match(/[A-Z][a-z]?/g);
+const count = (t) => tokens.filter(x => x === t).length;
+const steps = tokens.length - count("Rn") - count("Ar") - 2 * count("Y") - 1;
+console.log("Part 2 ->", steps);
